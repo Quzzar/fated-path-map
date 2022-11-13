@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Map</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=4, maximum-scale=4.00, minimum-scale=0.00" />
+  <meta name="description" content="World map" />
+</head>
+
+<body style="margin: 0;">
+
+  <div style="">
+
+    <style>
+      #map{
+          position:relative;
+          width:4096px;
+          height:4096px;
+      }
+      #mapgen4,#mapgen4-overlay-foliage,#mapgen4-overlay-markers,#mapgen4-overlay-player,#mapgen4-overlay-hover1,#mapgen4-overlay-hover2{
+          position:absolute; top:0px; left:0px;
+          width:4096px;
+          height:4096px;
+      }
+    </style>
+    
+    <div id="map">
+      <canvas id="mapgen4" width="4096" height="4096"></canvas>
+      <canvas id="mapgen4-overlay-foliage" style="z-index: 1;" width="4096" height="4096"></canvas>
+      <canvas id="mapgen4-overlay-markers" style="z-index: 2;" width="4096" height="4096"></canvas>
+      <canvas id="mapgen4-overlay-hover1" style="z-index: 3;" width="4096" height="4096"></canvas>
+      <canvas id="mapgen4-overlay-hover2" style="z-index: 4;" width="4096" height="4096"></canvas>
+      <canvas id="mapgen4-overlay-player" style="z-index: 5;" width="4096" height="4096"></canvas>
+    </div>
+
+    <canvas id="mapgen4-river"></canvas>
+    <canvas id="mapgen4-screenshot"></canvas>
+
+    <script src="_bundle.js"></script>
+    <script>
+      // TEMP - TO-REMOVE
+      /*
+      let storedJSON = localStorage.getItem('map');
+      if(storedJSON){
+        loadState(storedJSON);
+      } else {
+        //newState('seed');
+      }*/
+    </script>
+
+  </div>
+</body>
+
+</html>
