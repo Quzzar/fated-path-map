@@ -81,11 +81,6 @@ export function saveState(roads: Roads, regions: Regions, cities: number[], town
     }
   });
 
-  // TEMP - TO-REMOVE
-  //localStorage.setItem('map', JSON.stringify(result));
-  //console.log(JSON.stringify(result));
-  //localStorage.removeItem('map');
-
 }
 
 

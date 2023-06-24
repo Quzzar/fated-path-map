@@ -4,6 +4,7 @@ import { locationPinSvg } from './data_images';
 import { getRandomElement, getRandomInt } from './extension_math';
 import sendMessage from './extension_messages';
 import { getScreenCoordsWithT, Roads } from './extension_process';
+import Map from './map';
 
 let PLAYER_CANVAS: HTMLCanvasElement | null = null;
 let PLAYER_CANVAS_CTX: CanvasRenderingContext2D | null = null;
@@ -80,8 +81,23 @@ let playerData = {
 
 export function setPlayerData(newData){
   playerData = newData;
+
+  const map = document.getElementById('map');
+  if (map) {
+    const X_OFFSET = (window.visualViewport) ? window.visualViewport.width / 2 : 0;
+    const Y_OFFSET = (window.visualViewport) ? window.visualViewport.height / 2 : 0;
+
+    let coords = getScreenCoordsWithT(playerData.current_t_i);
+    let _x = coords.x - X_OFFSET; if(_x < 0) { _x = 0; }
+    let _y = coords.y - Y_OFFSET; if(_y < 0) { _y = 0; }
+
+    map.style.translate = `-${Math.floor(_x)}px -${Math.floor(_y)}px`;
+    //transform: scale(1.0);
+  }
+
   displayPlayer();
-  sendMessage('LOG', 'Updating player location! '+newData.current_t_i);
+
+  sendMessage('FINISH-PLAYER-SET');
 }
 
 export function getPlayerData(){

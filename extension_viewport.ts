@@ -1,10 +1,61 @@
 
+const MAX_SCALE = 3;
+const MIN_SCALE = 0.1;
 
 export default function handleViewport() {
 
-  window.visualViewport?.addEventListener('resize', () => {
+  if (!window.visualViewport) {
+    toggleCanvas('mapgen4-overlay-hover1', false);
+    toggleCanvas('mapgen4-overlay-hover2', true);
+    return;
+  }
 
-    let scale = window.visualViewport?.scale as number;
+  let oldScale = window.visualViewport.scale;
+  let oldWidth = window.visualViewport.width;
+  let oldHeight = window.visualViewport.height;
+
+  window.visualViewport.addEventListener('resize', () => {
+    if (!window.visualViewport) { return; }
+
+    let scale = window.visualViewport.scale as number;
+
+    // When zooming out, slowly undo map translate
+    if (oldScale > scale) {
+      const map = document.getElementById('map');
+      if (map) {
+        const translate = window.getComputedStyle(map).translate;
+        if (translate?.length > 0) {
+          let match = translate.match(/-(\d+)px -(\d+)px/);
+          if (match) {
+
+            //const DELTA = 0.001; //* ((MAX_SCALE / scale) / 30)
+            //0.015 * ((MAX_SCALE - scale) + MIN_SCALE) / MAX_SCALE;
+
+            // TODO - Apply the change in pageLeft & pageTop to translate
+            // let _x = window.visualViewport.pageLeft;
+
+            let _x = parseInt(match[1]) - (window.visualViewport.width - oldWidth);
+            if (_x < 0) { _x = 1; }
+            let _y = parseInt(match[2]) - (window.visualViewport.height - oldHeight);
+            if (_y < 0) { _y = 1; }
+
+            if (window.visualViewport.width > window.innerWidth - 10) {
+              _x = 1;
+              _y = 1;
+            }
+
+            if (_x === 1 && _y === 1) {
+              map.style.translate = ``;
+            } else {
+              map.style.translate = `-${Math.floor(_x)}px -${Math.floor(_y)}px`;
+            }
+
+          } else {
+            map.style.translate = ``;
+          }
+        }
+      }
+    }
 
     if (scale > 2.4) {
       toggleCanvas('mapgen4-overlay-hover1', true);
@@ -17,20 +68,17 @@ export default function handleViewport() {
       toggleCanvas('mapgen4-overlay-hover2', false);
     }
 
+    oldScale = scale;
+    oldWidth = window.visualViewport.width;
+    oldHeight = window.visualViewport.height;
   });
-
-  // If visualViewport doesn't exist, hide just hover2
-  if (!window.visualViewport) {
-    toggleCanvas('mapgen4-overlay-hover1', false);
-    toggleCanvas('mapgen4-overlay-hover2', true);
-  }
 
 }
 
-function toggleCanvas(id, hide) {
+function toggleCanvas(id: string, hide: boolean) {
   const canvas = document.getElementById(id);
   if (canvas) {
-    if(hide) {
+    if (hide) {
       canvas.style.display = `none`;
     } else {
       canvas.style.display = `block`;

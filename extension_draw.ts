@@ -32,7 +32,7 @@ import {
   forest5Png,
   forest6Png,
   forest7Png,
-  forest8Png,
+  forest8Png, // @ts-ignore
 } from './data_images';
 import { applyCityNames, applyTownNames, getCityName, getTownName } from './extension_names';
 import { BIOMES, buildSvgPaths, getBiome, getScreenCoordsWithR, getScreenCoordsWithT, getSideBetweenTriangles } from './extension_process';

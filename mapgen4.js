@@ -24,6 +24,7 @@ import {
   getRandomInt,
 } from './extension_math';
 import { newState, loadState } from './extension_state_manager';
+import sendMessage from './extension_messages';
 import { getPlayerData, setPlayerData } from './extension_player';
 
 // [name, initialValue, min, max]
@@ -201,4 +202,7 @@ window.loadState = loadState;
 window.setPlayerData = setPlayerData;
 window.getPlayerData = getPlayerData;
 
-
+window.onerror = function(message, url, lineNumber) {  
+  sendMessage('WARN', `Error at [line #${lineNumber}]: ${message}`);
+  return true;
+};  
