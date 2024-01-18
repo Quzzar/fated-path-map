@@ -1,4 +1,4 @@
-### Fated Path - Map Generator
+# Fated Path - Map Generator
 
 **Project Overview:** 
 This map generator is a website that generated 3D maps based on parameters from injected JavaScript. Developed as a part of Fated Path, a text-based game I'm working on created in React Native, this tool addresses the challenge of world generation within the single-threaded limitations of JavaScript. 
